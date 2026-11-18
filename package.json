@@ -1,0 +1,32 @@
+{
+  "name": "gestion-productos",
+  "version": "1.0.0",
+  "description": "Aplicación web de gestión de productos con Node.js, Express, MongoDB y JWT",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "jest",
+    "seed": "node scripts/seed.js",
+    "db": "node scripts/mongo-local.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.10"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.4.3",
+    "supertest": "^7.3.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

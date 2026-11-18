@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos | Inventario</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="barra">
+    <span class="marca">Inventario</span>
+    <div class="barra-sesion">
+      <span id="saludo"></span>
+      <button id="btn-salir" type="button" class="boton boton-claro">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="contenido">
+    <div class="encabezado">
+      <div>
+        <h1>Productos</h1>
+        <p id="resumen" class="resumen" aria-live="polite"></p>
+      </div>
+      <button id="btn-nuevo" type="button" class="boton boton-primario">Agregar producto</button>
+    </div>
+
+    <form id="filtros" class="filtros" role="search">
+      <label for="buscar" class="oculto">Buscar por nombre</label>
+      <input type="search" id="buscar" placeholder="Buscar por nombre">
+      <label for="filtro-categoria" class="oculto">Filtrar por categoría</label>
+      <select id="filtro-categoria"><option value="">Todas las categorías</option></select>
+    </form>
+
+    <p id="aviso" class="aviso" role="status" hidden></p>
+
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Categoría</th>
+            <th scope="col" class="num">Precio</th>
+            <th scope="col" class="num">Stock</th>
+            <th scope="col">Registró</th>
+            <th scope="col"><span class="oculto">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody id="productos"></tbody>
+      </table>
+    </div>
+    <p id="vacio" class="vacio" hidden>No hay productos que coincidan.</p>
+  </main>
+
+  <template id="plantilla-producto">
+    <tr>
+      <td><strong class="p-nombre"></strong><span class="p-descripcion"></span></td>
+      <td><span class="etiqueta p-categoria"></span></td>
+      <td class="num p-precio"></td>
+      <td class="num p-stock" data-etiqueta="Stock"></td>
+      <td class="p-autor" data-etiqueta="Registró"></td>
+      <td class="acciones">
+        <button type="button" class="boton boton-secundario" data-accion="editar">Editar</button>
+        <button type="button" class="boton boton-peligro" data-accion="eliminar">Eliminar</button>
+      </td>
+    </tr>
+  </template>
+
+  <dialog id="dialogo-producto" aria-labelledby="titulo-dialogo">
+    <form id="form-producto" novalidate>
+      <h2 id="titulo-dialogo">Agregar producto</h2>
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" required maxlength="120">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" name="descripcion" rows="2" maxlength="500"></textarea>
+      <div class="campos">
+        <div>
+          <label for="precio">Precio</label>
+          <input type="number" id="precio" name="precio" required min="0" step="0.01">
+        </div>
+        <div>
+          <label for="stock">Stock</label>
+          <input type="number" id="stock" name="stock" required min="0" step="1" value="0">
+        </div>
+        <div>
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria" required></select>
+        </div>
+      </div>
+      <ul id="errores" class="errores" role="alert"></ul>
+      <div class="dialogo-acciones">
+        <button type="button" id="btn-cancelar" class="boton boton-secundario">Cancelar</button>
+        <button type="submit" class="boton boton-primario">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dialogo-eliminar" aria-labelledby="titulo-eliminar">
+    <h2 id="titulo-eliminar">Eliminar producto</h2>
+    <p id="texto-eliminar"></p>
+    <div class="dialogo-acciones">
+      <button type="button" id="btn-no-eliminar" class="boton boton-secundario">Cancelar</button>
+      <button type="button" id="btn-si-eliminar" class="boton boton-peligro">Eliminar</button>
+    </div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/productos.js"></script>
+</body>
+</html>
