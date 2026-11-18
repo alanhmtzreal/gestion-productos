@@ -2,6 +2,8 @@
 
 Aplicación web para administrar un catálogo de productos. Los usuarios se registran, inician y cierran sesión, y con sesión activa pueden ver, agregar, modificar y eliminar productos. Cada producto solo lo puede modificar o eliminar quien lo registró.
 
+**Aplicación en línea:** https://gestion-productos-jet.vercel.app
+
 **Tecnologías:** Node.js, Express, MongoDB con Mongoose, JWT, bcryptjs, Jest y Supertest. Despliegue en Vercel con GitHub Actions.
 
 ## Estructura
@@ -90,17 +92,8 @@ Categorías: Electrónica, Hogar, Ropa, Alimentos, Papelería, Deportes y Otros.
 
 ## Despliegue (CI/CD)
 
-El archivo `.github/workflows/ci-cd.yml` define dos trabajos:
+- **CI con GitHub Actions** (`.github/workflows/ci-cd.yml`): en cada push y pull request instala dependencias y ejecuta Jest.
+- **CD con Vercel:** el proyecto está conectado al repositorio. Cada push a `main` genera un despliegue de producción automático, y cada pull request, un despliegue de vista previa.
+- **Despliegue por CLI (opcional):** el mismo workflow incluye un trabajo que publica con la CLI de Vercel solo si las pruebas pasan. Se activa al agregar en GitHub (**Settings → Secrets and variables → Actions**) los secretos `VERCEL_TOKEN`, `MONGODB_URI` y `JWT_SECRET`; sin ellos se omite.
 
-1. **Pruebas:** en cada push y pull request instala dependencias y ejecuta Jest.
-2. **Despliegue:** solo en `main` y solo si las pruebas pasan, publica en Vercel con su CLI y verifica que la API responda.
-
-Para que el despliegue funcione, agrega estos secretos en GitHub (**Settings → Secrets and variables → Actions**):
-
-| Secreto | Valor |
-|---|---|
-| `VERCEL_TOKEN` | Token de Vercel (**Account Settings → Tokens**) |
-| `MONGODB_URI` | Cadena de conexión de MongoDB Atlas con la base `gestion_productos` |
-| `JWT_SECRET` | Texto aleatorio largo |
-
-En MongoDB Atlas, **Network Access** debe permitir `0.0.0.0/0`, porque Vercel no tiene una IP fija.
+En Vercel, las variables `MONGODB_URI` y `JWT_SECRET` se configuran en **Settings → Environment Variables**. En MongoDB Atlas, **Network Access** debe permitir `0.0.0.0/0`, porque Vercel no tiene una IP fija.
